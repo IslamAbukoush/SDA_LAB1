@@ -10,13 +10,6 @@ void print_arr(int arr[], int n) {
     printf("%i}\n", arr[n-1]);
 }
 
-// swaps the value of two integers
-void swap(int* a, int* b) {
-    int t = *a;
-    *a = *b;
-    *b = t;
-}
-
 void merge(int arr[], int l, int m, int r) {
     int r_len = r - m;
     int l_len = m - l + 1;
