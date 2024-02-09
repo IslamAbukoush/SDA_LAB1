@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Prints the array in a nice way
 void print_arr(int arr[], int n) {
@@ -13,8 +14,8 @@ void print_arr(int arr[], int n) {
 void merge(int arr[], int l, int m, int r) {
     int r_len = r - m;
     int l_len = m - l + 1;
-    int l_seg[l_len];
-    int r_seg[r_len];
+    int* l_seg = (int*)malloc(sizeof(int)*l_len);
+    int* r_seg = (int*)malloc(sizeof(int)*r_len);
     for(int i = 0; i < l_len; i++) {
         l_seg[i] = arr[l+i];
     }
@@ -30,15 +31,17 @@ void merge(int arr[], int l, int m, int r) {
             j++;
         }
     }
+    free(r_seg);
+    free(l_seg);
 }
-void merge_sort_recursive(int arr[], int l, int r) {
+void merge_sort_recursive(int *arr, int l, int r) {
     if(l >= r) return;
     int m = (l + r)/2; 
     merge_sort_recursive(arr, l, m);
     merge_sort_recursive(arr, m+1, r);
     merge(arr, l, m, r);
 }
-void merge_sort(int arr[], int n) {
+void merge_sort(int* arr, int n) {
     merge_sort_recursive(arr, 0, n-1);
 }
 
@@ -48,7 +51,7 @@ int main()
     printf("Enter the length of the array: ");
     int n;
     scanf("%i", &n);
-    int arr[n];
+    int* arr = (int*)malloc(sizeof(int)*n);
     printf("Enter the elements: ");
     for(int i = 0; i < n; i++) {
         scanf("%i", &arr[i]);
@@ -60,4 +63,5 @@ int main()
     merge_sort(arr, n);
     printf("Sorted array: ");
     print_arr(arr, n);
+    free(arr);
 }
